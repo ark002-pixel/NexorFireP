@@ -100,6 +100,25 @@ export async function getBuildings() {
     });
 }
 
+export async function getBuildingDetails(id: string) {
+    return await prisma.building.findUnique({
+        where: { id },
+        include: {
+            prePlan: {
+                include: {
+                    contacts: true,
+                    hazmats: true,
+                    attachments: true,
+                    annotations: true
+                }
+            },
+            inspections: true,
+            hazards: true,
+            permits: true
+        }
+    });
+}
+
 // Sub-item Actions
 
 export async function addPrePlanContact(prePlanId: string, data: any) {
