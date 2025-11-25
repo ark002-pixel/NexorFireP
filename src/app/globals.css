@@ -1,0 +1,122 @@
+:root {
+  /* Brand Colors - Premium Fire Department Theme */
+  --color-primary: #DC2626;
+  /* Classic Fire Engine Red */
+  --color-primary-dark: #991B1B;
+  --color-primary-light: #FEF2F2;
+  --color-secondary: #FFFFFF;
+
+  /* Neutral Colors (Slate/Navy) */
+  --color-background: #F1F5F9;
+  /* Slate 100 - Softer background */
+  --color-surface: #FFFFFF;
+  --color-sidebar: #0F172A;
+  /* Slate 900 - Dark Sidebar */
+  --color-sidebar-text: #94A3B8;
+  /* Slate 400 */
+  --color-sidebar-text-active: #FFFFFF;
+
+  --color-text-main: #1E293B;
+  /* Slate 800 */
+  --color-text-secondary: #64748B;
+  /* Slate 500 */
+  --color-border: #E2E8F0;
+  /* Slate 200 */
+
+  /* Status Colors (Refined) */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utility Classes */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2), 0 2px 4px -1px rgba(220, 38, 38, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.3), 0 4px 6px -2px rgba(220, 38, 38, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  /* More rounded */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  /* Softer shadow */
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+}
+
+/* Glassmorphism Utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 0;
+}

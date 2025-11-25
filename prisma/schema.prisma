@@ -1,0 +1,636 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("USER") // ADMIN, COMMANDER, FIREFIGHTER, DISPATCHER
+  incidents Incident[]
+  pcrs      PCR[]
+  rosterEntries RosterEntry[]
+  trainingRecords TrainingRecord[]
+  certifications Certification[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Building {
+  id          String   @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  latitude    Float
+  longitude   Float
+  type        String   // Commercial, Residential, Industrial, etc.
+  floors      Int
+  area        Float?   // Area in square meters
+  yearBuilt   Int?
+  occupancy   String?  // Occupancy Load (number of people)
+  riskLevel   String?  // Low, Medium, High
+  hazards     Hazard[]
+  prePlan     PrePlan?
+  inspections Inspection[]
+  permits     Permit[]
+  systems     System[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Hazard {
+  id          String   @id @default(uuid())
+  buildingId  String
+  building    Building @relation(fields: [buildingId], references: [id])
+  type        String   // Chemical, Electrical, Structural, etc.
+  description String
+  location    String?  // Specific location within the building
+  severity    String   // Low, Medium, High, Critical
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PrePlan {
+  id          String   @id @default(uuid())
+  buildingId  String   @unique
+  building    Building @relation(fields: [buildingId], references: [id])
+  
+  // General Info
+  accessNotes            String?
+  hydrantInfo            String?
+  utilityGasShutoff      String?
+  utilityWaterShutoff    String?
+  utilityElectricShutoff String?
+  keyBoxLocation         String?
+  fdcLocation            String?
+  specialHazards         String?
+  roofConstruction       String?
+  floorConstruction      String?
+  
+  // Relations
+  contacts    PrePlanContact[]
+  hazmats     PrePlanHazMat[]
+  attachments PrePlanAttachment[]
+  annotations PrePlanAnnotation[]
+  
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model PrePlanContact {
+  id        String   @id @default(uuid())
+  prePlanId String
+  prePlan   PrePlan  @relation(fields: [prePlanId], references: [id], onDelete: Cascade)
+  name      String
+  role      String   // Owner, Manager, Keyholder
+  phone     String
+  email     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PrePlanHazMat {
+  id        String   @id @default(uuid())
+  prePlanId String
+  prePlan   PrePlan  @relation(fields: [prePlanId], references: [id], onDelete: Cascade)
+  name      String
+  location  String
+  quantity  String?
+  unNumber  String?
+  
+  // NFPA 704
+  health    Int      @default(0) // 0-4
+  flammability Int   @default(0) // 0-4
+  instability Int    @default(0) // 0-4
+  special   String?  // OX, SA, W, etc.
+  
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PrePlanAttachment {
+  id        String   @id @default(uuid())
+  prePlanId String
+  prePlan   PrePlan  @relation(fields: [prePlanId], references: [id], onDelete: Cascade)
+  name      String
+  url       String
+  type      String   // Image, PDF, Plan
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PrePlanAnnotation {
+  id        String   @id @default(uuid())
+  prePlanId String
+  prePlan   PrePlan  @relation(fields: [prePlanId], references: [id], onDelete: Cascade)
+  type      String   // Polygon, Marker, Text
+  data      String   // JSON string of coordinates/properties
+  label     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Inspection {
+  id          String      @id @default(uuid())
+  buildingId  String
+  building    Building    @relation(fields: [buildingId], references: [id])
+  inspectorId String?
+  status      String      // Scheduled, Completed, Failed, Passed
+  mode        String      @default("In-Person") // In-Person, Virtual
+  date        DateTime
+  notes       String?
+  templateId  String?
+  template    InspectionTemplate? @relation(fields: [templateId], references: [id])
+  results     InspectionResult[]
+  violations  Violation[]
+  invoices    Invoice[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model InspectionTemplate {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  type        String           // Annual, New Construction, Re-inspection
+  items       InspectionItem[]
+  inspections Inspection[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model InspectionItem {
+  id          String             @id @default(uuid())
+  templateId  String
+  template    InspectionTemplate @relation(fields: [templateId], references: [id])
+  question    String
+  type        String             // PassFail, Text, Photo, MultipleChoice
+  order       Int
+  mandatory   Boolean            @default(false)
+  codeRefId   String?
+  codeRef     FireCode?          @relation(fields: [codeRefId], references: [id])
+  results     InspectionResult[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model FireCode {
+  id          String           @id @default(uuid())
+  code        String           // e.g., NFPA 1 10.11.1
+  description String
+  source      String           // NFPA, IFC, Local
+  items       InspectionItem[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model InspectionResult {
+  id           String         @id @default(uuid())
+  inspectionId String
+  inspection   Inspection     @relation(fields: [inspectionId], references: [id])
+  itemId       String
+  item         InspectionItem @relation(fields: [itemId], references: [id])
+  status       String         // Pass, Fail, NA
+  notes        String?
+  photoUrl     String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Violation {
+  id           String     @id @default(uuid())
+  inspectionId String
+  inspection   Inspection @relation(fields: [inspectionId], references: [id])
+  code         String     // Fire code reference
+  description  String
+  severity     String     // Minor, Major, Critical
+  status       String     // Open, Resolved
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Permit {
+  id          String     @id @default(uuid())
+  buildingId  String
+  building    Building   @relation(fields: [buildingId], references: [id])
+  typeId      String?
+  permitType  PermitType? @relation(fields: [typeId], references: [id])
+  status      String     // Pending, Approved, Rejected, Expired
+  issueDate   DateTime
+  expiryDate  DateTime
+  invoices    Invoice[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model PermitType {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  duration    Int      // Days
+  fee         Float
+  permits     Permit[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Invoice {
+  id           String        @id @default(uuid())
+  number       String        @unique // Auto-generated
+  date         DateTime      @default(now())
+  dueDate      DateTime
+  status       String        // Draft, Sent, Paid, Overdue, Cancelled
+  total        Float
+  items        InvoiceItem[]
+  permitId     String?
+  permit       Permit?       @relation(fields: [permitId], references: [id])
+  inspectionId String?
+  inspection   Inspection?   @relation(fields: [inspectionId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  description String
+  quantity    Int
+  unitPrice   Float
+  total       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ServiceProvider {
+  id          String   @id @default(uuid())
+  name        String
+  contactName String?
+  email       String?
+  phone       String?
+  license     String?
+  status      String   // Active, Inactive, Suspended
+  systems     System[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model System {
+  id                String            @id @default(uuid())
+  buildingId        String
+  building          Building          @relation(fields: [buildingId], references: [id])
+  providerId        String?
+  provider          ServiceProvider?  @relation(fields: [providerId], references: [id])
+  type              String            // Sprinkler, Alarm, Extinguisher, etc.
+  installDate       DateTime?
+  lastServiceDate   DateTime?
+  nextServiceDate   DateTime?
+  status            String            // Operational, Impaired, Out of Service
+  maintenanceRecords MaintenanceRecord[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+model MaintenanceRecord {
+  id          String   @id @default(uuid())
+  systemId    String
+  system      System   @relation(fields: [systemId], references: [id])
+  date        DateTime
+  type        String   // Inspection, Test, Maintenance, Repair
+  technician  String?
+  notes       String?
+  outcome     String   // Pass, Fail, Deficiency
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Incident {
+  id          String         @id @default(uuid())
+  date        DateTime
+  type        String         // Fire, Medical, Rescue, Hazmat, etc.
+  address     String
+  status      String         // Open, Closed, Investigating
+  description String?
+  commanderId String?
+  commander   User?          @relation(fields: [commanderId], references: [id])
+  units       IncidentUnit[]
+  pcrs        PCR[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model IncidentUnit {
+  id           String    @id @default(uuid())
+  incidentId   String
+  incident     Incident  @relation(fields: [incidentId], references: [id])
+  unitName     String    // Engine 1, Ladder 2, Medic 3
+  dispatchTime DateTime
+  arrivalTime  DateTime?
+  clearTime    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Patient {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  dob       DateTime?
+  gender    String?
+  address   String?
+  allergies PatientAllergy[]
+  history   PatientHistory[]
+  pcrs      PCR[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PatientAllergy {
+  id        String   @id @default(uuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id])
+  allergen  String
+  reaction  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PatientHistory {
+  id        String   @id @default(uuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id])
+  condition String
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PCR {
+  id          String      @id @default(uuid())
+  incidentId  String?
+  incident    Incident?   @relation(fields: [incidentId], references: [id])
+  patientId   String
+  patient     Patient     @relation(fields: [patientId], references: [id])
+  medicId     String?
+  medic       User?       @relation(fields: [medicId], references: [id])
+  
+  // Times
+  dispatchTime      DateTime?
+  enRouteTime       DateTime?
+  onSceneTime       DateTime?
+  patientContactTime DateTime?
+  transportTime     DateTime?
+  hospitalArrivalTime DateTime?
+  clearTime         DateTime?
+
+  // Assessment
+  chiefComplaint    String
+  secondaryComplaint String?
+  narrative         String?
+  impression        String?
+
+  // Disposition
+  disposition       String? // Transported, Refused, Dead on Scene
+  destinationFacility String?
+
+  // Related Data
+  vitalSigns  VitalSign[]
+  medications MedicationAdministered[]
+  procedures  ProcedurePerformed[]
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model VitalSign {
+  id        String   @id @default(uuid())
+  pcrId     String
+  pcr       PCR      @relation(fields: [pcrId], references: [id])
+  time      DateTime
+  bpSystolic Int?
+  bpDiastolic Int?
+  pulse     Int?
+  respRate  Int?
+  spo2      Int?
+  temp      Float?
+  gcs       Int?
+  bloodGlucose Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MedicationAdministered {
+  id        String   @id @default(uuid())
+  pcrId     String
+  pcr       PCR      @relation(fields: [pcrId], references: [id])
+  name      String
+  dose      String
+  route     String   // IV, IM, PO, etc.
+  time      DateTime
+  response  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProcedurePerformed {
+  id        String   @id @default(uuid())
+  pcrId     String
+  pcr       PCR      @relation(fields: [pcrId], references: [id])
+  name      String
+  time      DateTime
+  successful Boolean
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Shift {
+  id        String        @id @default(uuid())
+  name      String        // Shift A, Shift B, Shift C
+  date      DateTime
+  startTime DateTime
+  endTime   DateTime
+  roster    RosterEntry[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model RosterEntry {
+  id        String   @id @default(uuid())
+  shiftId   String
+  shift     Shift    @relation(fields: [shiftId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  role      String   // Officer, Driver, Firefighter
+  unit      String?  // Engine 1, Truck 2
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Resident {
+  id              String          @id @default(uuid())
+  name            String
+  address         String
+  phone           String?
+  email           String?
+  accessCode      String?         // Gate code, key box code
+  functionalNeeds String?         // Mobility, Hearing, Vision impairments
+  medicalProfile  MedicalProfile?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model MedicalProfile {
+  id               String   @id @default(uuid())
+  residentId       String   @unique
+  resident         Resident @relation(fields: [residentId], references: [id])
+  conditions       String?  // Diabetes, Heart Condition, etc.
+  medications      String?
+  allergies        String?
+  emergencyContact String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Vehicle {
+  id          String             @id @default(uuid())
+  name        String             // Engine 1, Ladder 2
+  type        String             // Pumper, Aerial, Ambulance, SUV
+  make        String?
+  model       String?
+  year        Int?
+  vin         String?
+  status      String             // In Service, Out of Service, Maintenance
+  mileage     Int?
+  maintenance AssetMaintenance[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model Equipment {
+  id          String             @id @default(uuid())
+  name        String             // SCBA, Saw, Defibrillator
+  type        String             // PPE, Tool, Medical
+  serialNumber String?
+  status      String             // In Service, Out of Service, Lost
+  location    String?            // Engine 1, Station 2
+  maintenance AssetMaintenance[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model AssetMaintenance {
+  id          String     @id @default(uuid())
+  vehicleId   String?
+  vehicle     Vehicle?   @relation(fields: [vehicleId], references: [id])
+  equipmentId String?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id])
+  date        DateTime
+  type        String     // Repair, Service, Inspection
+  description String
+  cost        Float?
+  performedBy String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Hydrant {
+  id              String              @id @default(uuid())
+  latitude        Float
+  longitude       Float
+  address         String?
+  status          String              // Operational, Out of Service
+  
+  // Physical Details
+  make            String?
+  model           String?
+  year            Int?
+  outlets         String?             // e.g., "2x 2.5, 1x 4.5"
+  mainSize        Float?              // Inches
+  color           String?             // Blue, Green, Orange, Red
+  imageUrl        String?
+  
+  // Flow Data
+  flowRate        Int?                // GPM
+  staticPressure  Int?                // PSI
+  residualPressure Int?               // PSI
+  pitotPressure   Int?                // PSI
+  
+  lastServiceDate DateTime?
+  notes           String?
+  
+  inspections     HydrantInspection[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model HydrantInspection {
+  id          String   @id @default(uuid())
+  hydrantId   String
+  hydrant     Hydrant  @relation(fields: [hydrantId], references: [id])
+  date        DateTime
+  
+  // Flow Test Results
+  flowRate    Int?
+  staticPressure Int?
+  residualPressure Int?
+  pitotPressure Int?
+  
+  // Condition Checks
+  caps        Boolean  @default(true)
+  threads     Boolean  @default(true)
+  paint       Boolean  @default(true)
+  drainage    Boolean  @default(true)
+  marker      Boolean  @default(true)
+  
+  notes       String?
+  inspectorId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Course {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  duration    Int              // Hours
+  type        String           // Online, In-person, Hybrid
+  mandatory   Boolean          @default(false)
+  records     TrainingRecord[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model TrainingRecord {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  date      DateTime
+  status    String   // Completed, In Progress, Failed
+  score     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certification {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  name             String
+  issuingAuthority String
+  issueDate        DateTime
+  expiryDate       DateTime?
+  status           String   // Active, Expired
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

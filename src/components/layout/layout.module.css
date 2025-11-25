@@ -1,0 +1,98 @@
+.layoutContainer {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--color-sidebar);
+    /* border-right: 1px solid var(--color-border); Removed for cleaner look */
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+}
+
+.sidebarHeader {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    /* Subtle divider */
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    /* White logo on dark bg */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    letter-spacing: -0.025em;
+}
+
+.nav {
+    padding: var(--spacing-md);
+    flex: 1;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 0.75rem var(--spacing-md);
+    border-radius: 8px;
+    color: var(--color-sidebar-text);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 2px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.navItem:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-sidebar-text-active);
+}
+
+.navItemActive {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    /* Glow effect */
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-background);
+}
+
+.header {
+    height: var(--header-height);
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Glassmorphism */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-xl);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.pageContent {
+    padding: var(--spacing-xl);
+    flex: 1;
+}
