@@ -28,7 +28,7 @@ export default async function IncidentDetailsPage({ params }: { params: { id: st
                     <div>
                         <h2 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#111827', lineHeight: 1.2, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <ShieldAlert color="#EF4444" size={32} />
-                            {incident.type} #{incident.incidentNumber}
+                            {incident.type} #{incident.id.slice(0, 8)}
                         </h2>
                         <div style={{ display: 'flex', gap: '1.5rem', color: '#6B7280' }}>
                             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
