@@ -1,4 +1,6 @@
 import { getResidents } from '@/actions/community';
+
+export const dynamic = 'force-dynamic';
 import { Users, Home, Activity } from 'lucide-react';
 import NewResidentForm from '@/components/community/NewResidentForm';
 
