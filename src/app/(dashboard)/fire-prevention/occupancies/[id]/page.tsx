@@ -23,7 +23,7 @@ export default async function OccupancyDetailPage({ params }: { params: Promise<
                         </h1>
                         <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem', color: 'var(--color-text-secondary)' }}>
                             <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><MapPin size={16} /> {building.address}</span>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Phone size={16} /> {building.prePlan?.contactPhone || 'Sin teléfono'}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Phone size={16} /> {building.prePlan?.contacts?.[0]?.phone || 'Sin teléfono'}</span>
                         </div>
                     </div>
                     <span style={{ padding: '0.5rem 1rem', backgroundColor: '#EFF6FF', color: '#1E40AF', borderRadius: '9999px', fontWeight: 600 }}>
