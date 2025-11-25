@@ -21,7 +21,9 @@ function SubmitButton() {
 
 export default function RegisterPage() {
     return (
-        <form action={registerUser}>
+        <form action={async (formData) => {
+            await registerUser(formData);
+        }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1.5rem', textAlign: 'center' }}>Crear Cuenta</h2>
 
             <div style={{ marginBottom: '1rem' }}>

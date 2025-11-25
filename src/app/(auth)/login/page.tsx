@@ -21,7 +21,9 @@ function SubmitButton() {
 
 export default function LoginPage() {
     return (
-        <form action={loginUser}>
+        <form action={async (formData) => {
+            await loginUser(formData);
+        }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1.5rem', textAlign: 'center' }}>Bienvenido</h2>
 
             <div style={{ marginBottom: '1rem' }}>
