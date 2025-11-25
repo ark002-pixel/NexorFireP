@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getIncidents } from '@/actions/neris';
 import { Flame, MapPin, Clock, AlertCircle } from 'lucide-react';
 import NewIncidentForm from '@/components/neris/NewIncidentForm';
@@ -54,3 +55,4 @@ export default async function NERISPage() {
         </div>
     );
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getAssets, deleteVehicle } from '@/actions/assets';
 import { Truck } from 'lucide-react';
 import DateDisplay from '@/components/ui/DateDisplay';
@@ -12,18 +13,18 @@ export default async function VehiclesPage() {
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Flota Vehicular</h2>
                 <button className="btn btn-primary">
                     <Truck size={20} style={{ marginRight: '0.5rem' }} />
-                    Nuevo Vehículo
+                    Nuevo VehÃ­culo
                 </button>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
                 {vehicles.length === 0 ? (
-                    <p style={{ color: 'var(--color-text-secondary)' }}>No hay vehículos registrados.</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>No hay vehÃ­culos registrados.</p>
                 ) : (
                     vehicles.map((vehicle) => (
                         <div key={vehicle.id} className="card" style={{ position: 'relative' }}>
                             <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                                <GenericActionButtons id={vehicle.id} onDelete={deleteVehicle} deleteConfirmMessage="¿Está seguro de que desea eliminar este vehículo?" />
+                                <GenericActionButtons id={vehicle.id} onDelete={deleteVehicle} deleteConfirmMessage="Â¿EstÃ¡ seguro de que desea eliminar este vehÃ­culo?" />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', paddingRight: '2rem' }}>
                                 <div>
@@ -66,3 +67,4 @@ export default async function VehiclesPage() {
         </div>
     );
 }
+

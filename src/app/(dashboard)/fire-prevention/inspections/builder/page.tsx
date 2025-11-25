@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 'use client';
 
 import { getInspectionTemplates, getFireCodes } from '@/actions/inspections';
@@ -24,7 +25,7 @@ export default function InspectionBuilderPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Constructor de Inspecciones</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestione plantillas y códigos de inspección</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestione plantillas y cÃ³digos de inspecciÃ³n</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <button
@@ -39,7 +40,7 @@ export default function InspectionBuilderPage() {
                         style={{ backgroundColor: activeTab === 'codes' ? undefined : '#F3F4F6' }}
                         onClick={() => setActiveTab('codes')}
                     >
-                        Códigos
+                        CÃ³digos
                     </button>
                 </div>
             </div>
@@ -66,7 +67,7 @@ export default function InspectionBuilderPage() {
 
                                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>{template.name}</h3>
                                 <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem', flex: 1 }}>
-                                    {template.description || 'Sin descripción'}
+                                    {template.description || 'Sin descripciÃ³n'}
                                 </p>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
@@ -91,7 +92,7 @@ export default function InspectionBuilderPage() {
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
                         <button className="btn btn-primary" onClick={() => setShowCodeModal(true)}>
                             <Plus size={20} style={{ marginRight: '0.5rem' }} />
-                            Nuevo Código
+                            Nuevo CÃ³digo
                         </button>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -120,3 +121,4 @@ export default function InspectionBuilderPage() {
         </div>
     );
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { UserSquare2, Search } from 'lucide-react';
 
 export default function ProfilesPage() {
@@ -23,7 +24,7 @@ export default function ProfilesPage() {
                     </thead>
                     <tbody>
                         {[
-                            { name: 'Juan Pérez', rank: 'Sargento', status: 'Activo' },
+                            { name: 'Juan PÃ©rez', rank: 'Sargento', status: 'Activo' },
                             { name: 'Maria Rodriguez', rank: 'Cabo', status: 'Activo' },
                             { name: 'Carlos Gomez', rank: 'Bombero', status: 'Vacaciones' },
                         ].map((person, index) => (
@@ -52,3 +53,4 @@ export default function ProfilesPage() {
         </div>
     );
 }
+

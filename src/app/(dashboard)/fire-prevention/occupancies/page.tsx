@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getBuildings } from '@/actions/buildings';
 import { Building, MapPin, Activity } from 'lucide-react';
 import Link from 'next/link';
@@ -9,7 +10,7 @@ export default async function OccupanciesPage() {
         <div>
             <div style={{ marginBottom: '2rem' }}>
                 <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Ocupaciones (Occupancy 360)</h1>
-                <p style={{ color: 'var(--color-text-secondary)' }}>Gestión integral de edificaciones y riesgos</p>
+                <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n integral de edificaciones y riesgos</p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
@@ -38,7 +39,7 @@ export default async function OccupanciesPage() {
                                 style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}
                             >
                                 <Activity size={16} style={{ marginRight: '0.5rem' }} />
-                                Gestionar 360°
+                                Gestionar 360Â°
                             </Link>
                         </div>
                     </div>
@@ -47,3 +48,4 @@ export default async function OccupanciesPage() {
         </div>
     );
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getAnalyticsData } from '@/actions/analytics';
 import { BarChart3, TrendingUp, AlertCircle } from 'lucide-react';
 
@@ -97,3 +98,4 @@ export default async function AnalyticsPage() {
         </div>
     );
 }
+

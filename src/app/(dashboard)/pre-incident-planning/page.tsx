@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 'use client';
 
 import { getBuildings } from '@/actions/buildings';
@@ -30,12 +31,12 @@ export default function PreIncidentPage() {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Planificación Pre-Incidente</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestión de edificaciones y riesgos</p>
+                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>PlanificaciÃ³n Pre-Incidente</h1>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n de edificaciones y riesgos</p>
                 </div>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <Plus size={20} style={{ marginRight: '0.5rem' }} />
-                    Nueva Edificación
+                    Nueva EdificaciÃ³n
                 </button>
             </div>
 
@@ -84,7 +85,7 @@ export default function PreIncidentPage() {
                                         )}
                                     </div>
                                     <button style={{ marginTop: '1rem', width: '100%', padding: '0.5rem', backgroundColor: '#F3F4F6', border: 'none', borderRadius: '4px', color: '#4B5563', fontWeight: 500, cursor: 'pointer', fontSize: '0.875rem' }}>
-                                        Ver Rutas de Evacuación
+                                        Ver Rutas de EvacuaciÃ³n
                                     </button>
                                 </div>
                             ))
@@ -106,3 +107,4 @@ export default function PreIncidentPage() {
         </div>
     );
 }
+

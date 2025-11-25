@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 'use client';
 
 import dynamic from 'next/dynamic';
@@ -20,3 +21,4 @@ export default function MapPage() {
         </div>
     );
 }
+

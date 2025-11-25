@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getInvoices } from '@/actions/invoicing';
 import { FileText, DollarSign, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
@@ -9,8 +10,8 @@ export default async function InvoicingPage() {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Facturación</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestión de Facturas y Pagos</p>
+                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>FacturaciÃ³n</h1>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n de Facturas y Pagos</p>
                 </div>
             </div>
 
@@ -19,7 +20,7 @@ export default async function InvoicingPage() {
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <thead>
                             <tr style={{ borderBottom: '1px solid var(--color-border)', textAlign: 'left' }}>
-                                <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>Número</th>
+                                <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>NÃºmero</th>
                                 <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>Concepto</th>
                                 <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>Fecha</th>
                                 <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>Vencimiento</th>
@@ -40,7 +41,7 @@ export default async function InvoicingPage() {
                                         <td style={{ padding: '1rem', fontWeight: 500 }}>{invoice.number}</td>
                                         <td style={{ padding: '1rem' }}>
                                             {invoice.permit ? `Permiso: ${invoice.permit.permitType?.name}` :
-                                                invoice.inspection ? `Inspección: ${invoice.inspection.building.name}` : 'Otro'}
+                                                invoice.inspection ? `InspecciÃ³n: ${invoice.inspection.building.name}` : 'Otro'}
                                         </td>
                                         <td style={{ padding: '1rem', color: 'var(--color-text-secondary)' }}>{new Date(invoice.date).toLocaleDateString()}</td>
                                         <td style={{ padding: '1rem', color: 'var(--color-text-secondary)' }}>{new Date(invoice.dueDate).toLocaleDateString()}</td>
@@ -64,3 +65,4 @@ export default async function InvoicingPage() {
         </div>
     );
 }
+

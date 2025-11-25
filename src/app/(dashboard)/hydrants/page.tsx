@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getHydrants } from '@/actions/hydrants';
 import { Droplet, MapPin, Activity, PenTool } from 'lucide-react';
 import NewHydrantForm from '@/components/hydrants/NewHydrantForm';
@@ -36,7 +37,7 @@ export default async function HydrantsPage() {
                                 <div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
                                         <MapPin size={16} color="var(--color-primary)" />
-                                        <h4 style={{ fontWeight: 600 }}>{hydrant.address || 'Ubicación sin dirección'}</h4>
+                                        <h4 style={{ fontWeight: 600 }}>{hydrant.address || 'UbicaciÃ³n sin direcciÃ³n'}</h4>
                                     </div>
                                     <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                                         <span>Lat: {hydrant.latitude.toFixed(4)}, Lng: {hydrant.longitude.toFixed(4)}</span>
@@ -74,3 +75,4 @@ export default async function HydrantsPage() {
         </div>
     );
 }
+

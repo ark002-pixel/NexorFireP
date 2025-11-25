@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getDashboardStats, getRecentActivity } from '@/actions/dashboard';
 import { Activity, Users, AlertTriangle, CheckCircle, FileText, ClipboardCheck, Flame } from 'lucide-react';
 import Link from 'next/link';
@@ -73,7 +74,7 @@ export default async function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 500 }}>{item.title}</p>
                   <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                    {new Date(item.date).toLocaleDateString()} • {item.details}
+                    {new Date(item.date).toLocaleDateString()} â€¢ {item.details}
                   </p>
                 </div>
                 <Link href={
@@ -91,3 +92,4 @@ export default async function Dashboard() {
     </div>
   );
 }
+

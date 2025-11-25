@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getInspections, getPermits } from '@/actions/fire-prevention';
 import { IconClipboardCheck, IconFileText, IconAlertTriangle } from '@/components/ui/Icons';
 import Link from 'next/link';
@@ -40,7 +41,7 @@ export default async function FirePreventionDashboard() {
                         <IconAlertTriangle size={24} />
                     </div>
                     <div>
-                        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>Violaciones Críticas</p>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>Violaciones CrÃ­ticas</p>
                         <p style={{ fontSize: '1.5rem', fontWeight: 700 }}>0</p>
                     </div>
                 </div>
@@ -53,7 +54,7 @@ export default async function FirePreventionDashboard() {
                 </div>
 
                 <div className="card">
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Accesos Rápidos</h3>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Accesos RÃ¡pidos</h3>
                     <div style={{ display: 'grid', gap: '0.5rem' }}>
                         <Link href="/fire-prevention/inspections" style={{ padding: '0.75rem', backgroundColor: '#F9FAFB', borderRadius: '6px', textDecoration: 'none', color: 'inherit', display: 'flex', justifyContent: 'space-between' }}>
                             <span>Ver todas las inspecciones</span>
@@ -69,3 +70,4 @@ export default async function FirePreventionDashboard() {
         </div>
     );
 }
+

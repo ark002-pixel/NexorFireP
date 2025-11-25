@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getActiveDispatches } from '@/actions/mobile';
 import DispatchCard from '@/components/mobile/DispatchCard';
 import { Radio } from 'lucide-react';
@@ -42,3 +43,4 @@ export default async function MobilePage() {
         </div>
     );
 }
+

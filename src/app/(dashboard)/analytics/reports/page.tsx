@@ -1,10 +1,11 @@
+﻿export const dynamic = 'force-dynamic';
 import { FileText, Download } from 'lucide-react';
 import DateDisplay from '@/components/ui/DateDisplay';
 
 export default function ReportsPage() {
     const reports = [
         { id: 1, name: 'Reporte Mensual de Incidentes - Octubre 2023', date: '2023-11-01', size: '2.4 MB' },
-        { id: 2, name: 'Auditoría de Inspecciones Q3 2023', date: '2023-10-15', size: '1.8 MB' },
+        { id: 2, name: 'AuditorÃ­a de Inspecciones Q3 2023', date: '2023-10-15', size: '1.8 MB' },
         { id: 3, name: 'Estado de Flota Vehicular', date: '2023-11-20', size: '0.9 MB' },
     ];
 
@@ -26,12 +27,12 @@ export default function ReportsPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
                     <div style={{ padding: '1rem', border: '1px solid #E5E7EB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                         <h4 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>UNGRD</h4>
-                        <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '1rem' }}>Informe de Gestión del Riesgo</p>
+                        <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '1rem' }}>Informe de GestiÃ³n del Riesgo</p>
                         <button className="btn" style={{ width: '100%', fontSize: '0.875rem' }}>Generar XML</button>
                     </div>
                     <div style={{ padding: '1rem', border: '1px solid #E5E7EB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                         <h4 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>DIAN</h4>
-                        <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '1rem' }}>Reporte de Facturación Electrónica</p>
+                        <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '1rem' }}>Reporte de FacturaciÃ³n ElectrÃ³nica</p>
                         <button className="btn" style={{ width: '100%', fontSize: '0.875rem' }}>Generar Reporte</button>
                     </div>
                     <div style={{ padding: '1rem', border: '1px solid #E5E7EB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
@@ -54,7 +55,7 @@ export default function ReportsPage() {
                                 <div>
                                     <h4 style={{ fontWeight: 600 }}>{report.name}</h4>
                                     <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                                        Generado el <DateDisplay date={report.date} /> • {report.size}
+                                        Generado el <DateDisplay date={report.date} /> â€¢ {report.size}
                                     </p>
                                 </div>
                             </div>
@@ -69,3 +70,4 @@ export default function ReportsPage() {
         </div>
     );
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getAssets, deleteEquipment } from '@/actions/assets';
 import { Wrench } from 'lucide-react';
 import GenericActionButtons from '@/components/ui/GenericActionButtons';
@@ -22,7 +23,7 @@ export default async function EquipmentPage() {
                     equipment.map((item) => (
                         <div key={item.id} className="card" style={{ position: 'relative' }}>
                             <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                                <GenericActionButtons id={item.id} onDelete={deleteEquipment} deleteConfirmMessage="¿Está seguro de que desea eliminar este equipo?" />
+                                <GenericActionButtons id={item.id} onDelete={deleteEquipment} deleteConfirmMessage="Â¿EstÃ¡ seguro de que desea eliminar este equipo?" />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', paddingRight: '2rem' }}>
                                 <div>
@@ -47,3 +48,4 @@ export default async function EquipmentPage() {
         </div>
     );
 }
+

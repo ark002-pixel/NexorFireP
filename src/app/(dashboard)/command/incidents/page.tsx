@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getActiveIncidents, deleteIncident } from '@/actions/command';
 import { Clock, Radio, MapPin, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
@@ -26,7 +27,7 @@ export default async function IncidentsPage() {
                     incidents.map((incident) => (
                         <div key={incident.id} className="card" style={{ borderLeft: '4px solid #EF4444', position: 'relative' }}>
                             <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                                <GenericActionButtons id={incident.id} onDelete={deleteIncident} deleteConfirmMessage="¿Está seguro de que desea eliminar este incidente?" />
+                                <GenericActionButtons id={incident.id} onDelete={deleteIncident} deleteConfirmMessage="Â¿EstÃ¡ seguro de que desea eliminar este incidente?" />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', paddingRight: '2rem' }}>
                                 <div>
@@ -102,3 +103,4 @@ export default async function IncidentsPage() {
         </div>
     );
 }
+

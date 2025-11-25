@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getAssets } from '@/actions/assets';
 import { Truck, Wrench, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
@@ -16,7 +17,7 @@ export default async function AssetsDashboard() {
                         <Truck size={24} />
                     </div>
                     <div>
-                        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>Vehículos Operativos</p>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>VehÃ­culos Operativos</p>
                         <p style={{ fontSize: '1.5rem', fontWeight: 700 }}>{activeVehicles} / {vehicles.length}</p>
                     </div>
                 </div>
@@ -44,7 +45,7 @@ export default async function AssetsDashboard() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                 <div className="card">
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Accesos Rápidos</h3>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Accesos RÃ¡pidos</h3>
                     <div style={{ display: 'grid', gap: '0.5rem' }}>
                         <Link href="/assets/vehicles" style={{ padding: '0.75rem', backgroundColor: '#F9FAFB', borderRadius: '6px', textDecoration: 'none', color: 'inherit', display: 'flex', justifyContent: 'space-between' }}>
                             <span>Gestionar Flota</span>
@@ -60,3 +61,4 @@ export default async function AssetsDashboard() {
         </div>
     );
 }
+

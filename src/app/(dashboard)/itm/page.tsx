@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getServiceProviders, getSystems } from '@/actions/itm';
 import { Wrench, Users, CheckCircle, AlertTriangle } from 'lucide-react';
 import NewServiceProviderForm from '@/components/itm/NewServiceProviderForm';
@@ -11,7 +12,7 @@ export default async function ITMPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>ITM</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Inspección, Prueba y Mantenimiento</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>InspecciÃ³n, Prueba y Mantenimiento</p>
                 </div>
                 <NewServiceProviderForm />
             </div>
@@ -33,7 +34,7 @@ export default async function ITMPage() {
                                     <div>
                                         <h4 style={{ fontWeight: 600 }}>{system.type} - {system.building.name}</h4>
                                         <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                                            Próximo servicio: {system.nextServiceDate ? new Date(system.nextServiceDate).toLocaleDateString() : 'No programado'}
+                                            PrÃ³ximo servicio: {system.nextServiceDate ? new Date(system.nextServiceDate).toLocaleDateString() : 'No programado'}
                                         </p>
                                     </div>
                                     <span style={{
@@ -79,3 +80,4 @@ export default async function ITMPage() {
         </div>
     );
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getPermits } from '@/actions/fire-prevention';
 import { IconFileText, IconSettings } from '@/components/ui/Icons';
 import NewPermitForm from '@/components/fire-prevention/NewPermitForm';
@@ -15,7 +16,7 @@ export default async function PermitsPage() {
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <Link href="/fire-prevention/permits/settings" className="btn" style={{ backgroundColor: '#F3F4F6', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         <IconSettings size={20} style={{ marginRight: '0.5rem' }} />
-                        Configuración
+                        ConfiguraciÃ³n
                     </Link>
                     <NewPermitForm />
                 </div>
@@ -41,7 +42,7 @@ export default async function PermitsPage() {
                                         </p>
                                         <span style={{ fontSize: '0.75rem', padding: '0.1rem 0.5rem', backgroundColor: '#D1FAE5', color: '#065F46', borderRadius: '4px' }}>
                                             {/* {permit.permitType?.name || 'Tipo Desconocido'} */}
-                                            Permiso Estándar
+                                            Permiso EstÃ¡ndar
                                         </span>
                                     </div>
                                 </div>
@@ -56,3 +57,4 @@ export default async function PermitsPage() {
         </div>
     );
 }
+

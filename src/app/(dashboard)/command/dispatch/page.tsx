@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { Radio, Mic, Volume2 } from 'lucide-react';
 
 export default function DispatchPage() {
@@ -37,3 +38,4 @@ export default function DispatchPage() {
         </div>
     );
 }
+

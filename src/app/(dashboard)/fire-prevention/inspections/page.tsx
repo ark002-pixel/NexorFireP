@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getInspections, getInspectionTemplates } from '@/actions/fire-prevention';
 import { getBuildings } from '@/actions/buildings';
 import { IconClipboardCheck } from '@/components/ui/Icons';
@@ -14,7 +15,7 @@ export default async function InspectionsPage() {
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Gestión de Inspecciones</h2>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>GestiÃ³n de Inspecciones</h2>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <Link href="/fire-prevention/inspections/builder" className="btn" style={{ backgroundColor: '#F3F4F6', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         Constructor de Inspecciones
@@ -64,3 +65,4 @@ export default async function InspectionsPage() {
         </div>
     );
 }
+

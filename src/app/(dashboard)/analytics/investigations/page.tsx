@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getInvestigations } from '@/actions/analytics';
 import { Search, MapPin, Calendar } from 'lucide-react';
 import Link from 'next/link';
@@ -12,7 +13,7 @@ export default async function InvestigationsPage() {
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Investigaciones de Incendios</h2>
                 <button className="btn btn-primary">
                     <Search size={20} style={{ marginRight: '0.5rem' }} />
-                    Nueva Investigación
+                    Nueva InvestigaciÃ³n
                 </button>
             </div>
 
@@ -52,3 +53,4 @@ export default async function InvestigationsPage() {
         </div>
     );
 }
+

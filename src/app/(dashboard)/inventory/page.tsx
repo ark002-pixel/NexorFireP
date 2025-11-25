@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { getVehicles } from '@/actions/inventory';
 import { Truck, Wrench, AlertTriangle } from 'lucide-react';
 import NewAssetForm from '@/components/inventory/NewAssetForm';
@@ -10,7 +11,7 @@ export default async function InventoryPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Assets & Inventory</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestión de Flota y Equipos</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n de Flota y Equipos</p>
                 </div>
                 <NewAssetForm />
             </div>
@@ -18,12 +19,12 @@ export default async function InventoryPage() {
             <div className="card">
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <Truck size={20} />
-                    Flota de Vehículos
+                    Flota de VehÃ­culos
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {vehicles.length === 0 ? (
-                        <p style={{ color: 'var(--color-text-secondary)', textAlign: 'center' }}>No hay vehículos registrados.</p>
+                        <p style={{ color: 'var(--color-text-secondary)', textAlign: 'center' }}>No hay vehÃ­culos registrados.</p>
                     ) : (
                         vehicles.map((vehicle) => (
                             <div key={vehicle.id} style={{ padding: '1rem', border: '1px solid var(--color-border)', borderRadius: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -51,3 +52,4 @@ export default async function InventoryPage() {
         </div>
     );
 }
+
