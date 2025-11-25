@@ -51,7 +51,7 @@ export default async function CommunityPage() {
                                     )}
                                     {resident.medicalProfile && (
                                         <div>
-                                            <span style={{ fontWeight: 600, display: 'block', color: 'var(--color-text-main)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                                            <span style={{ fontWeight: 600, color: 'var(--color-text-main)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                                                 <Activity size={14} /> Alertas Médicas:
                                             </span>
                                             <span style={{ color: 'var(--color-text-secondary)' }}>
