@@ -1,9 +1,9 @@
 ﻿export const dynamic = 'force-dynamic';
 'use client';
 
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 
-const OperationalMap = dynamic(() => import('@/components/command/OperationalMap'), {
+const OperationalMap = nextDynamic(() => import('@/components/command/OperationalMap'), {
     ssr: false,
     loading: () => <div style={{ height: '600px', backgroundColor: '#E5E7EB', borderRadius: '12px' }} />
 });

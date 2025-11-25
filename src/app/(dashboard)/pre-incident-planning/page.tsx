@@ -3,13 +3,13 @@
 
 import { getBuildings } from '@/actions/buildings';
 import { Plus, Building as BuildingIcon } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import NewBuildingForm from '@/components/pre-incident/NewBuildingForm';
 import EditBuildingForm from '@/components/pre-incident/EditBuildingForm';
 
 // Dynamically import Map to avoid SSR issues with Leaflet
-const MapComponent = dynamic(() => import('@/components/pre-incident/Map'), {
+const MapComponent = nextDynamic(() => import('@/components/pre-incident/Map'), {
     ssr: false,
     loading: () => <div style={{ height: '500px', width: '100%', backgroundColor: '#e5e7eb', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Cargando mapa...</div>
 });
