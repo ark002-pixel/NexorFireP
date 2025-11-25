@@ -1,5 +1,5 @@
-﻿export const dynamic = 'force-dynamic';
-'use client';
+﻿'use client';
+export const dynamic = 'force-dynamic';
 
 import { getBuildings } from '@/actions/buildings';
 import { Plus, Building as BuildingIcon } from 'lucide-react';
@@ -107,4 +107,5 @@ export default function PreIncidentPage() {
         </div>
     );
 }
+
 

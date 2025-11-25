@@ -1,5 +1,5 @@
-﻿export const dynamic = 'force-dynamic';
-'use client';
+﻿'use client';
+export const dynamic = 'force-dynamic';
 
 import { getPermitTypes, createPermitType } from '@/actions/finance';
 import { Plus, Settings, DollarSign, Clock } from 'lucide-react';
@@ -107,4 +107,5 @@ export default function PermitSettingsPage() {
         </div>
     );
 }
+
 

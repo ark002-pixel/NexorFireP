@@ -1,5 +1,5 @@
-﻿export const dynamic = 'force-dynamic';
-'use client';
+﻿'use client';
+export const dynamic = 'force-dynamic';
 
 import nextDynamic from 'next/dynamic';
 
@@ -21,4 +21,5 @@ export default function MapPage() {
         </div>
     );
 }
+
 

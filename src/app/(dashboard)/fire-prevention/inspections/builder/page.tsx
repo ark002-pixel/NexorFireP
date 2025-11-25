@@ -1,5 +1,5 @@
-﻿export const dynamic = 'force-dynamic';
-'use client';
+﻿'use client';
+export const dynamic = 'force-dynamic';
 
 import { getInspectionTemplates, getFireCodes } from '@/actions/inspections';
 import { Plus, FileText, Settings, BookOpen } from 'lucide-react';
@@ -121,4 +121,5 @@ export default function InspectionBuilderPage() {
         </div>
     );
 }
+
 
