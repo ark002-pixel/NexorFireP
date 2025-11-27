@@ -2,8 +2,9 @@
 
 import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import { prisma } from '@/lib/db';
 
-const prisma = new PrismaClient();
+
 
 export async function getIncidents() {
     return await prisma.incident.findMany({

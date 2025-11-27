@@ -5,8 +5,9 @@ import { hash, compare } from 'bcryptjs';
 import { encrypt } from '@/lib/auth';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { prisma } from '@/lib/db';
 
-const prisma = new PrismaClient();
+
 
 export async function registerUser(formData: FormData) {
     const name = formData.get('name') as string;

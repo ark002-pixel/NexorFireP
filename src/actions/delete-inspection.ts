@@ -3,8 +3,9 @@
 import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import * as fs from 'fs';
+import { prisma } from '@/lib/db';
 
-const prisma = new PrismaClient();
+
 
 export async function deleteInspection(id: string) {
     const log = (msg: string) => {
