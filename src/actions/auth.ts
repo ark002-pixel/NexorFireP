@@ -17,23 +17,28 @@ export async function registerUser(formData: FormData) {
         return { error: 'Todos los campos son obligatorios' };
     }
 
-    const existingUser = await prisma.user.findUnique({
-        where: { email },
-    });
+    try {
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
+        });
 
-    if (existingUser) {
-        return { error: 'El usuario ya existe' };
+        if (existingUser) {
+            return { error: 'El usuario ya existe' };
+        }
+
+        const hashedPassword = await hash(password, 10);
+
+        await prisma.user.create({
+            data: {
+                name,
+                email,
+                password: hashedPassword,
+            },
+        });
+    } catch (error: any) {
+        console.error('Registration Error:', error);
+        return { error: error.message || 'Error al crear usuario' };
     }
-
-    const hashedPassword = await hash(password, 10);
-
-    await prisma.user.create({
-        data: {
-            name,
-            email,
-            password: hashedPassword,
-        },
-    });
 
     redirect('/login');
 }
