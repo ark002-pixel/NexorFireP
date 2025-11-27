@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // Vercel Deployment Fix
   url      = env("DATABASE_URL")
 }
 
