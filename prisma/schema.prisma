@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Vercel Deployment Fix
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = "postgres://1763a08e72dd2ef54d80a7f5cb44728c64bac29a90642786d522b3c863940ccc:sk_AwKtWcxlAwQdVrXd_1mcg@db.prisma.io:5432/postgres?sslmode=require"
 }
 
 model User {
