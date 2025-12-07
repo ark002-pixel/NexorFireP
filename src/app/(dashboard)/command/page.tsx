@@ -75,7 +75,7 @@ export default async function CommandDashboard() {
                 </div>
 
                 <div className="card">
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Accesos RÃ¡pidos</h3>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Accesos Rápidos</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         <button className="btn btn-primary" style={{ justifyContent: 'center' }}>
                             <ShieldAlert size={18} style={{ marginRight: '0.5rem' }} />
@@ -87,7 +87,7 @@ export default async function CommandDashboard() {
                         </Link>
                         <Link href="/command/map" className="btn" style={{ backgroundColor: '#F3F4F6', color: 'inherit', justifyContent: 'center', textDecoration: 'none' }}>
                             <Activity size={18} style={{ marginRight: '0.5rem' }} />
-                            Mapa de SituaciÃ³n
+                            Mapa de Situación
                         </Link>
                     </div>
                 </div>

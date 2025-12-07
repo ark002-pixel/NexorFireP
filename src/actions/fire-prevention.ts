@@ -4,8 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/db';
 
-
-
 export async function getInspections() {
     try {
         return await prisma.inspection.findMany({
@@ -42,7 +40,11 @@ export async function getPermits() {
     try {
         return await prisma.permit.findMany({
             include: {
-                building: true,
+                building: {
+                    include: {
+                        inspections: true
+                    }
+                },
             },
             orderBy: {
                 expiryDate: 'asc',
@@ -55,12 +57,21 @@ export async function getPermits() {
 }
 
 export async function getInspectionTemplates() {
-    return [];
+    try {
+        return await prisma.inspectionTemplate.findMany({
+            orderBy: { name: 'asc' }
+        });
+    } catch (error) {
+        console.error('Error fetching templates:', error);
+        return [];
+    }
 }
 
 export async function createInspection(formData: FormData) {
     const buildingId = formData.get('buildingId') as string;
     const date = new Date(formData.get('date') as string);
+    const mode = formData.get('mode') as string || 'In-Person';
+    const templateId = formData.get('templateId') as string;
     const status = 'Scheduled';
 
     try {
@@ -69,6 +80,8 @@ export async function createInspection(formData: FormData) {
                 buildingId,
                 date,
                 status,
+                mode,
+                templateId: templateId || undefined
             },
         });
 
@@ -83,12 +96,15 @@ export async function updateInspection(id: string, formData: FormData) {
     const date = new Date(formData.get('date') as string);
     const status = formData.get('status') as string;
 
+    const templateId = formData.get('templateId') as string;
+
     try {
         await prisma.inspection.update({
             where: { id },
             data: {
                 date,
                 status,
+                templateId: templateId || null
             },
         });
 
@@ -169,5 +185,52 @@ export async function revokePermit(id: string) {
         revalidatePath('/fire-prevention/permits');
     } catch (error) {
         console.error('Error revoking permit:', error);
+    }
+}
+export async function issuePermitFromInspection(
+    inspectionId: string,
+    inspectorSignature?: string,
+    clientSignature?: string,
+    clientName?: string
+) {
+    try {
+        const inspection = await prisma.inspection.findUnique({
+            where: { id: inspectionId },
+            include: { building: true }
+        });
+
+        if (!inspection) throw new Error('Inspection not found');
+
+        // 1. Save signatures to the inspection record
+        if (inspectorSignature || clientSignature || clientName) {
+            await prisma.inspection.update({
+                where: { id: inspectionId },
+                data: {
+                    inspectorSignature,
+                    clientSignature,
+                    clientName
+                }
+            });
+        }
+
+        const issueDate = new Date();
+        const expiryDate = new Date();
+        expiryDate.setDate(issueDate.getDate() + 365); // 1 year validity
+
+        const permit = await prisma.permit.create({
+            data: {
+                buildingId: inspection.buildingId,
+                status: 'Approved',
+                issueDate,
+                expiryDate,
+                // typeId could be linked here if we had a default type
+            }
+        });
+
+        revalidatePath('/fire-prevention/permits');
+        return { success: true, permitId: permit.id };
+    } catch (error) {
+        console.error('Error issuing permit:', error);
+        return { success: false, error: String(error) };
     }
 }

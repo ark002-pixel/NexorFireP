@@ -74,7 +74,7 @@ export default async function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 500 }}>{item.title}</p>
                   <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                    {new Date(item.date).toLocaleDateString()} â€¢ {item.details}
+                    {new Date(item.date).toLocaleDateString()} • {item.details}
                   </p>
                 </div>
                 <Link href={

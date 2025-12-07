@@ -10,7 +10,7 @@ export default async function OccupanciesPage() {
         <div>
             <div style={{ marginBottom: '2rem' }}>
                 <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Ocupaciones (Occupancy 360)</h1>
-                <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n integral de edificaciones y riesgos</p>
+                <p style={{ color: 'var(--color-text-secondary)' }}>Gestión integral de edificaciones y riesgos</p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>

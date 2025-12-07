@@ -81,23 +81,29 @@ export async function getRecentActivity() {
         ...incidents.map(i => ({
             id: i.id,
             type: 'Incident',
-            title: `${i.type} - ${i.address}`,
+            title: `Incidente - ${i.address}`,
             date: i.date,
-            details: `Status: ${i.status}`
+            details: `Estado: ${i.status === 'Open' ? 'Abierto' : i.status === 'Closed' ? 'Cerrado' : i.status}`
         })),
         ...inspections.map(i => ({
             id: i.id,
             type: 'Inspection',
-            title: `Inspection - ${i.building.name}`,
+            title: `Inspección - ${i.building.name}`,
             date: i.date,
-            details: `Status: ${i.status}`
+            details: `Estado: ${{
+                'Scheduled': 'Programada',
+                'Completed': 'Completada',
+                'Failed': 'Reprobada',
+                'Passed': 'Aprobada',
+                'In Progress': 'En Progreso'
+            }[i.status] || i.status}`
         })),
         ...permits.map(p => ({
             id: p.id,
             type: 'Permit',
-            title: `Permit Issued - ${p.building.name}`,
+            title: `Permiso Emitido - ${p.building.name}`,
             date: p.issueDate,
-            details: `Type: ${p.permitType?.name || 'N/A'}`
+            details: `Tipo: ${p.permitType?.name || 'N/A'}`
         }))
     ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);

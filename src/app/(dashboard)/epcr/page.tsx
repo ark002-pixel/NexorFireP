@@ -14,7 +14,7 @@ export default async function EPCRPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>ePCR</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Registro de AtenciÃ³n Prehospitalaria</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>Registro de Atención Prehospitalaria</p>
                 </div>
                 <NewPCRForm />
             </div>
@@ -32,7 +32,7 @@ export default async function EPCRPage() {
                                 <GenericActionButtons
                                     id={pcr.id}
                                     onDelete={deletePCR}
-                                    deleteConfirmMessage="Â¿EstÃ¡ seguro de que desea eliminar este reporte ePCR?"
+                                    deleteConfirmMessage="¿Está seguro de que desea eliminar este reporte ePCR?"
                                 />
                             </div>
 

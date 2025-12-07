@@ -11,7 +11,7 @@ export default async function TrainingPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Training</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>GestiÃ³n de Cursos y Certificaciones</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestión de Cursos y Certificaciones</p>
                 </div>
                 <NewCourseForm />
             </div>
@@ -19,7 +19,7 @@ export default async function TrainingPage() {
             <div className="card">
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <BookOpen size={20} />
-                    CatÃ¡logo de Cursos
+                    Catálogo de Cursos
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -24,7 +24,7 @@ export default function ProfilesPage() {
                     </thead>
                     <tbody>
                         {[
-                            { name: 'Juan PÃ©rez', rank: 'Sargento', status: 'Activo' },
+                            { name: 'Juan Pérez', rank: 'Sargento', status: 'Activo' },
                             { name: 'Maria Rodriguez', rank: 'Cabo', status: 'Activo' },
                             { name: 'Carlos Gomez', rank: 'Bombero', status: 'Vacaciones' },
                         ].map((person, index) => (

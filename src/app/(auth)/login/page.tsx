@@ -24,6 +24,19 @@ export default function LoginPage() {
         <form action={async (formData) => {
             await loginUser(formData);
         }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem', flexDirection: 'column', alignItems: 'center' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src="/logo.png"
+                    alt="NexorFire"
+                    width={280}
+                    height={84}
+                    style={{ width: 'auto', height: '84px' }}
+                />
+                <p style={{ marginTop: '0.5rem', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
+                    Software Integral para Bomberos
+                </p>
+            </div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1.5rem', textAlign: 'center' }}>Bienvenido</h2>
 
             <div style={{ marginBottom: '1rem' }}>

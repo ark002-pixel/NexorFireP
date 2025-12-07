@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { usePathname } from 'next/navigation';
 import styles from './layout.module.css';
 import {
@@ -64,18 +65,38 @@ const menuGroups = [
       { name: 'Analítica', href: '/analytics', icon: BarChart3 },
       { name: 'Investigaciones', href: '/analytics/investigations', icon: Search },
     ]
+  },
+  {
+    title: 'ADMINISTRACIÓN',
+    items: [
+      { name: 'Usuarios', href: '/admin/users', icon: ShieldCheck },
+    ]
   }
 ];
+
+
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.sidebarHeader}>
-        <div className={styles.logo}>
-          <ShieldCheck size={24} />
-          <span>NexorFire</span>
+      <div className={styles.sidebarHeader} style={{
+        backgroundColor: 'white',
+        padding: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <div className={styles.logo} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <NextImage
+            src="/logo.png"
+            alt="NexorFire"
+            width={220}
+            height={60}
+            priority
+            style={{ width: 'auto', height: '55px' }}
+          />
         </div>
       </div>
       <nav className={styles.nav} style={{ overflowY: 'auto' }}>

@@ -5,7 +5,7 @@ import { Trash2, Edit, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
 import EditInspectionForm from './EditInspectionForm';
 
-export default function InspectionActions({ inspection }: { inspection: any }) {
+export default function InspectionActions({ inspection, templates }: { inspection: any, templates?: any[] }) {
     const [showMenu, setShowMenu] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -114,7 +114,7 @@ export default function InspectionActions({ inspection }: { inspection: any }) {
             )}
 
             {showEditModal && (
-                <EditInspectionForm inspection={inspection} onClose={() => setShowEditModal(false)} />
+                <EditInspectionForm inspection={inspection} templates={templates || []} onClose={() => setShowEditModal(false)} />
             )}
         </div>
     );

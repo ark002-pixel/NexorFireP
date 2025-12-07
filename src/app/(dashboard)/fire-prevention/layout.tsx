@@ -5,6 +5,8 @@ export default function FirePreventionLayout({ children }: { children: React.Rea
     const tabs = [
         { name: 'Panel General', href: '/fire-prevention', icon: <IconLayoutDashboard size={18} /> },
         { name: 'Inspecciones', href: '/fire-prevention/inspections', icon: <IconClipboardCheck size={18} /> },
+        { name: 'Mapa', href: '/fire-prevention/map', icon: <IconLayoutDashboard size={18} /> },
+        { name: 'Virtual', href: '/fire-prevention/virtual', icon: <IconClipboardCheck size={18} /> },
         { name: 'Permisos', href: '/fire-prevention/permits', icon: <IconFileText size={18} /> },
     ];
 

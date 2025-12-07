@@ -1,8 +1,8 @@
 ﻿'use client';
 export const dynamic = 'force-dynamic';
 
-import { getInspectionTemplates, getFireCodes } from '@/actions/inspections';
-import { Plus, FileText, Settings, BookOpen } from 'lucide-react';
+import { getInspectionTemplates, getFireCodes, deleteInspectionTemplate } from '@/actions/inspections';
+import { Plus, FileText, Settings, BookOpen, Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import NewTemplateForm from '@/components/fire-prevention/NewTemplateForm';
 import NewCodeForm from '@/components/fire-prevention/NewCodeForm';
@@ -14,18 +14,34 @@ export default function InspectionBuilderPage() {
     const [activeTab, setActiveTab] = useState<'templates' | 'codes'>('templates');
     const [showTemplateModal, setShowTemplateModal] = useState(false);
     const [showCodeModal, setShowCodeModal] = useState(false);
+    const [deleteConfirmation, setDeleteConfirmation] = useState<{ show: boolean; templateId: string | null }>({ show: false, templateId: null });
 
     useEffect(() => {
         getInspectionTemplates().then(setTemplates);
         getFireCodes().then(setCodes);
     }, [showTemplateModal, showCodeModal]);
 
+    const handleDelete = async () => {
+        if (!deleteConfirmation.templateId) return;
+
+        try {
+            await deleteInspectionTemplate(deleteConfirmation.templateId);
+            // Refresh list
+            const updatedTemplates = await getInspectionTemplates();
+            setTemplates(updatedTemplates);
+            setDeleteConfirmation({ show: false, templateId: null });
+        } catch (error) {
+            console.error('Error deleting template:', error);
+            alert('Error al eliminar la plantilla.');
+        }
+    };
+
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Constructor de Inspecciones</h1>
-                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestione plantillas y cÃ³digos de inspecciÃ³n</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>Gestione plantillas y códigos de inspección</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <button
@@ -40,7 +56,7 @@ export default function InspectionBuilderPage() {
                         style={{ backgroundColor: activeTab === 'codes' ? undefined : '#F3F4F6' }}
                         onClick={() => setActiveTab('codes')}
                     >
-                        CÃ³digos
+                        Códigos
                     </button>
                 </div>
             </div>
@@ -67,21 +83,32 @@ export default function InspectionBuilderPage() {
 
                                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>{template.name}</h3>
                                 <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem', flex: 1 }}>
-                                    {template.description || 'Sin descripciÃ³n'}
+                                    {template.description || 'Sin descripción'}
                                 </p>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
                                     <span style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
                                         {template.items?.length || 0} Items
                                     </span>
-                                    <Link
-                                        href={`/fire-prevention/inspections/builder/${template.id}`}
-                                        className="btn"
-                                        style={{ backgroundColor: '#F3F4F6', fontSize: '0.875rem', padding: '0.5rem 1rem' }}
-                                    >
-                                        <Settings size={16} style={{ marginRight: '0.5rem' }} />
-                                        Configurar
-                                    </Link>
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button
+                                            type="button"
+                                            onClick={() => setDeleteConfirmation({ show: true, templateId: template.id })}
+                                            className="btn"
+                                            style={{ backgroundColor: '#FEF2F2', color: '#DC2626', fontSize: '0.875rem', padding: '0.5rem' }}
+                                            title="Eliminar Plantilla"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                        <Link
+                                            href={`/fire-prevention/inspections/builder/${template.id}`}
+                                            className="btn"
+                                            style={{ backgroundColor: '#F3F4F6', fontSize: '0.875rem', padding: '0.5rem 1rem' }}
+                                        >
+                                            <Settings size={16} style={{ marginRight: '0.5rem' }} />
+                                            Configurar
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -92,7 +119,7 @@ export default function InspectionBuilderPage() {
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
                         <button className="btn btn-primary" onClick={() => setShowCodeModal(true)}>
                             <Plus size={20} style={{ marginRight: '0.5rem' }} />
-                            Nuevo CÃ³digo
+                            Nuevo Código
                         </button>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -118,6 +145,43 @@ export default function InspectionBuilderPage() {
 
             {showTemplateModal && <NewTemplateForm onClose={() => setShowTemplateModal(false)} />}
             {showCodeModal && <NewCodeForm onClose={() => setShowCodeModal(false)} />}
+
+            {/* Delete Confirmation Modal */}
+            {deleteConfirmation.show && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 50
+                }}>
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">¿Eliminar plantilla?</h3>
+                        <p className="text-gray-500 mb-6">
+                            Esta acción eliminará la plantilla y todos sus ítems asociados. No se puede deshacer.
+                        </p>
+                        <div className="flex justify-end gap-3">
+                            <button
+                                onClick={() => setDeleteConfirmation({ show: false, templateId: null })}
+                                className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg font-medium"
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

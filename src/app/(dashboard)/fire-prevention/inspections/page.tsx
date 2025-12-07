@@ -15,7 +15,7 @@ export default async function InspectionsPage() {
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>GestiÃ³n de Inspecciones</h2>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Gestión de Inspecciones</h2>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <Link href="/fire-prevention/inspections/builder" className="btn" style={{ backgroundColor: '#F3F4F6', display: 'inline-flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         Constructor de Inspecciones
@@ -50,12 +50,29 @@ export default async function InspectionsPage() {
                                         fontSize: '0.75rem',
                                         padding: '0.25rem 0.5rem',
                                         borderRadius: '4px',
-                                        backgroundColor: inspection.status === 'Scheduled' ? '#DBEAFE' : '#F3F4F6',
-                                        color: inspection.status === 'Scheduled' ? '#1E40AF' : '#374151'
+                                        backgroundColor: inspection.status === 'Scheduled' ? '#DBEAFE' :
+                                            inspection.status === 'Completed' ? '#D1FAE5' :
+                                                inspection.status === 'Failed' ? '#FEE2E2' : '#F3F4F6',
+                                        color: inspection.status === 'Scheduled' ? '#1E40AF' :
+                                            inspection.status === 'Completed' ? '#065F46' :
+                                                inspection.status === 'Failed' ? '#991B1B' : '#374151'
                                     }}>
-                                        {inspection.status}
+                                        {{
+                                            'Scheduled': 'Programada',
+                                            'Completed': 'Completada',
+                                            'Failed': 'Reprobada',
+                                            'Passed': 'Aprobada',
+                                            'In Progress': 'En Progreso'
+                                        }[inspection.status] || inspection.status}
                                     </span>
-                                    <InspectionActions inspection={inspection} />
+                                    <Link
+                                        href={`/fire-prevention/inspections/run/${inspection.id}`}
+                                        className="btn btn-primary"
+                                        style={{ fontSize: '0.875rem', padding: '0.5rem 1rem', textDecoration: 'none' }}
+                                    >
+                                        Ejecutar
+                                    </Link>
+                                    <InspectionActions inspection={inspection} templates={templates} />
                                 </div>
                             </div>
                         ))

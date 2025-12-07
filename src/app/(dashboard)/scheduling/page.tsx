@@ -17,7 +17,7 @@ export default async function SchedulingPage() {
             <div className="card">
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <Calendar size={20} />
-                    PrÃ³ximos Turnos
+                    Próximos Turnos
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -27,7 +27,7 @@ export default async function SchedulingPage() {
                         shifts.map((shift) => (
                             <div key={shift.id} style={{ padding: '1rem', border: '1px solid var(--color-border)', borderRadius: '6px', position: 'relative' }}>
                                 <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                                    <GenericActionButtons id={shift.id} onDelete={deleteShift} deleteConfirmMessage="Â¿EstÃ¡ seguro de que desea eliminar este turno?" />
+                                    <GenericActionButtons id={shift.id} onDelete={deleteShift} deleteConfirmMessage="¿Está seguro de que desea eliminar este turno?" />
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', paddingRight: '2rem' }}>
                                     <div>

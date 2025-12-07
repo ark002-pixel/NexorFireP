@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://1763a08e72dd2ef54d80a7f5cb44728c64bac29a90642786d522b3c863940ccc:sk_AwKtWcxlAwQdVrXd_1mcg@db.prisma.io:5432/postgres?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -20,6 +20,11 @@ model User {
   certifications Certification[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Advanced Routing Relations
+  inspectorProfile InspectorProfile?
+  routes           Route[]
+  safetyReports    SafetyIncident[]
 }
 
 model Building {
@@ -154,6 +159,15 @@ model Inspection {
   invoices    Invoice[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  // Advanced Routing
+  routeStop   RouteStop?
+  priority    Int         @default(0) // 0=Normal, 1=High, 2=Critical
+
+  // Signatures
+  inspectorSignature String?  @db.Text
+  clientSignature    String?  @db.Text
+  clientName         String?
 }
 
 model InspectionTemplate {
@@ -173,10 +187,13 @@ model InspectionItem {
   template    InspectionTemplate @relation(fields: [templateId], references: [id])
   question    String
   type        String             // PassFail, Text, Photo, MultipleChoice
+  responseType String?           // Standard, Custom (for UI rendering)
   order       Int
   mandatory   Boolean            @default(false)
+  isMandatory Boolean            @default(false) // Alias for mandatory to match new spec
   codeRefId   String?
   codeRef     FireCode?          @relation(fields: [codeRefId], references: [id])
+  associatedCodes InspectionItemCode[]
   results     InspectionResult[]
   createdAt   DateTime           @default(now())
   updatedAt   DateTime           @updatedAt
@@ -188,8 +205,21 @@ model FireCode {
   description String
   source      String           // NFPA, IFC, Local
   items       InspectionItem[]
+  linkedItems InspectionItemCode[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+}
+
+model InspectionItemCode {
+  id               String         @id @default(uuid())
+  inspectionItemId String
+  inspectionItem   InspectionItem @relation(fields: [inspectionItemId], references: [id], onDelete: Cascade)
+  fireCodeId       String
+  fireCode         FireCode       @relation(fields: [fireCodeId], references: [id], onDelete: Cascade)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([inspectionItemId, fireCodeId])
 }
 
 model InspectionResult {
@@ -633,4 +663,62 @@ model Certification {
   status           String   // Active, Expired
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+// --- Advanced Routing & Safety (SGR Adaptation) ---
+
+model InspectorProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  currentLat  Float?
+  currentLng  Float?
+  lastUpdate  DateTime?
+  vehicleType String?  // Car, Truck, Motorcycle
+  status      String   // Active, Inactive, OnBreak
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Route {
+  id          String      @id @default(uuid())
+  inspectorId String
+  inspector   User        @relation(fields: [inspectorId], references: [id])
+  date        DateTime
+  status      String      // Planned, InProgress, Completed
+  stops       RouteStop[]
+  totalDistance Float?    // Meters
+  totalTime     Int?      // Minutes
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model RouteStop {
+  id           String     @id @default(uuid())
+  routeId      String
+  route        Route      @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  inspectionId String?    @unique
+  inspection   Inspection? @relation(fields: [inspectionId], references: [id])
+  sequence     Int        // Order in the route
+  status       String     // Pending, Arrived, Completed, Skipped
+  estimatedArrival DateTime?
+  actualArrival    DateTime?
+  actualDeparture  DateTime?
+  notes        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model SafetyIncident {
+  id          String   @id @default(uuid())
+  reporterId  String
+  reporter    User     @relation(fields: [reporterId], references: [id])
+  type        String   // Accident, Theft, RoadBlock, Hazard
+  description String
+  latitude    Float
+  longitude   Float
+  timestamp   DateTime @default(now())
+  status      String   // Reported, Verified, Cleared
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

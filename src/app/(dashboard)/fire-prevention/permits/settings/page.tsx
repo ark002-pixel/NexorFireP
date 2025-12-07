@@ -27,7 +27,7 @@ export default function PermitSettingsPage() {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>ConfiguraciÃ³n de Permisos</h1>
+                    <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--color-text-main)' }}>Configuración de Permisos</h1>
                     <p style={{ color: 'var(--color-text-secondary)' }}>Gestione tipos de permisos y tarifas</p>
                 </div>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
@@ -47,13 +47,13 @@ export default function PermitSettingsPage() {
 
                         <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>{type.name}</h3>
                         <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
-                            {type.description || 'Sin descripciÃ³n'}
+                            {type.description || 'Sin descripción'}
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
                                 <Clock size={16} className="text-gray-400" />
-                                <span>DuraciÃ³n: {type.duration} dÃ­as</span>
+                                <span>Duración: {type.duration} días</span>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
                                 <DollarSign size={16} className="text-gray-400" />
@@ -82,12 +82,12 @@ export default function PermitSettingsPage() {
                                     <input name="name" required placeholder="Ej: Materiales Peligrosos" style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--color-border)' }} />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>DescripciÃ³n</label>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>Descripción</label>
                                     <textarea name="description" rows={3} style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--color-border)' }} />
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                     <div>
-                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>DuraciÃ³n (DÃ­as)</label>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>Duración (Días)</label>
                                         <input name="duration" type="number" required defaultValue="365" style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--color-border)' }} />
                                     </div>
                                     <div>

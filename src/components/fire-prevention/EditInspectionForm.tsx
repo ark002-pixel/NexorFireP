@@ -13,7 +13,7 @@ function SubmitButton() {
     );
 }
 
-export default function EditInspectionForm({ inspection, onClose }: { inspection: any, onClose: () => void }) {
+export default function EditInspectionForm({ inspection, templates, onClose }: { inspection: any, templates: any[], onClose: () => void }) {
     return (
         <div style={{
             position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -60,6 +60,20 @@ export default function EditInspectionForm({ inspection, onClose }: { inspection
                         >
                             <option value="In-Person">Presencial</option>
                             <option value="Virtual">Virtual</option>
+                        </select>
+                    </div>
+
+                    <div style={{ marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>Lista de Chequeo (Template)</label>
+                        <select
+                            name="templateId"
+                            defaultValue={inspection.templateId || ''}
+                            style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--color-border)' }}
+                        >
+                            <option value="">-- Seleccionar --</option>
+                            {templates && templates.map((t: any) => (
+                                <option key={t.id} value={t.id}>{t.name}</option>
+                            ))}
                         </select>
                     </div>
 
