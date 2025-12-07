@@ -52,29 +52,35 @@ export async function loginUser(formData: FormData) {
         return { error: 'Todos los campos son obligatorios' };
     }
 
-    const user = await prisma.user.findUnique({
-        where: { email },
-    });
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
 
-    if (!user) {
-        return { error: 'Credenciales inválidas' };
+        if (!user) {
+            return { error: 'Credenciales inválidas' };
+        }
+
+        const isValid = await compare(password, user.password);
+
+        if (!isValid) {
+            return { error: 'Credenciales inválidas' };
+        }
+
+        // Create session
+        const session = await encrypt({ id: user.id, email: user.email, name: user.name, role: user.role });
+
+        (await cookies()).set('session', session, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24, // 1 day
+            path: '/',
+        });
+
+    } catch (error: any) {
+        console.error('Login Error:', error);
+        return { error: 'Error al iniciar sesión. Verifique su conexión o credenciales.' };
     }
-
-    const isValid = await compare(password, user.password);
-
-    if (!isValid) {
-        return { error: 'Credenciales inválidas' };
-    }
-
-    // Create session
-    const session = await encrypt({ id: user.id, email: user.email, name: user.name, role: user.role });
-
-    (await cookies()).set('session', session, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 24, // 1 day
-        path: '/',
-    });
 
     redirect('/');
 }
