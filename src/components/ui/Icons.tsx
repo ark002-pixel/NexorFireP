@@ -18,7 +18,7 @@ export const IconLayoutDashboard = ({ size }: { size: number }) => <LayoutDashbo
 export const IconActivity = ({ size }: { size: number }) => <Activity size={size} />;
 export const IconShieldAlert = ({ size }: { size: number }) => <ShieldAlert size={size} />;
 export const IconRadio = ({ size }: { size: number }) => <Radio size={size} />;
-export const IconMap = ({ size }: { size: number }) => <Map size={size} />;
+export const IconMap = ({ size, style }: { size: number, style?: React.CSSProperties }) => <Map size={size} style={style} />;
 
 export const IconCalendar = ({ size }: { size: number }) => <Calendar size={size} />;
 export const IconHeartPulse = ({ size }: { size: number }) => <HeartPulse size={size} />;
