@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import { IconMap, IconCheckCircle, IconTruck, IconUser } from '@/components/ui/Icons';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 async function getActiveRoute() {
     // In a real app, filter by logged-in user
     // For prototype, get the first active route or create a mock one if none exists
