@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import Link from 'next/link';
 import { IconMap, IconClipboardCheck, IconSearch, IconFilter } from '@/components/ui/Icons';
 
+export const dynamic = 'force-dynamic';
+
 async function getAssignedInspections() {
     // In a real app, filter by the logged-in user's ID
     return await prisma.inspection.findMany({
